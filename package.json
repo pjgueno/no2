@@ -1,26 +1,24 @@
 {
-  "name": "kusterapp",
+  "name": "CDV",
   "version": "1.0.0",
-  "description": "an app for cheeses at Kustermann",
+  "description": "Archives départementales de la Moselle",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --config webpack.dev.js --mode development",
     "build": "webpack --config webpack.config.js"
   },
-  "homepage": "http://www.kustermann-markthalle.de/",
+  "homepage": "http://download.codingdavinci.de/index.php/s/CogeyAzf5PzWAyz",
   "keywords": [
-    "cheese",
-    "markthalle",
-    "stuttgart"
+    "Carte",
+    "Moselle"
   ],
   "author": "pjgueno",
   "license": "MIT",
   "dependencies": {
-    "autocompleter": "^6.0.3",
+    "chroma-js": "^2.1.0",
     "geojson": "^0.5.0",
     "leaflet": "^1.6.0",
-    "sidebar-v2": "^0.4.0",
     "webpack": "^4.42.1"
   },
   "devDependencies": {

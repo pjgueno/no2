@@ -14,75 +14,62 @@ body { height: 100%;
         width: 100vw; 
         height: 100vh; 
         z-index: 0;
-        }    
+        }  
 
+.leaflet-popup-tip {
+    width: 0px;
+    height: 0px;
+  }
 
-#menu {
-    background-color: rgba(56, 181, 173, 1);
-    color: white;
-    font-size: 30px;
-    border: none;
-    cursor: pointer;
-    top: 0;
-    right: 0;
+#legendcontainer {
+    display: inline-block;
+    width: 9.5em;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.legend {
+    font-family: arial, sans-serif;
+    color: black;
+    font-size: 15px;
     position: absolute;
-    z-index: 1200;
-    padding: 5px 10px;
+    bottom: 0;
+    height: 100%;
 }
 
-#menu:hover, #menu:focus {
-    background-color: rgb(49, 135, 127);
-}
-
-#sidebar {
-    display: block;
+.legend-inner {
     position: absolute;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 400px;
-    max-width: 100%;
-/*    display: none;*/
-    z-index: 100;
-    background-color: rgba(250, 250, 250, 0.8);
-    overflow-y: auto;
+    left: 30px;
+    bottom: 20px;
+    pointer-events: none;
+    height: 80%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
 }
 
-#container{
-padding: 20px;
+.legend-inner .gradient {
+    opacity: 1;
+    width: 20px;
+    position: relative;
 }
 
-#fromage{
+.legend-inner .labels {
+    width: 10em;
+    position: relative;
 }
 
-
-.autocomplete {
-    background: white;
-    z-index: 1000;
-    font: 14px/22px "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    overflow: auto;
-    box-sizing: border-box;
-    border: 1px solid rgba(50, 50, 50, 0.6);
+.legend-inner .labels .label {
+    position: absolute;
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
 }
 
-.autocomplete * {
-    font: inherit;
+.legend-inner .labels .label:before {
+    content: '\2013   ';
 }
 
-.autocomplete > div {
-    padding: 0 4px;
-}
-
-.autocomplete .group {
-    background: #eee;
-}
-
-.autocomplete > div:hover:not(.group),
-.autocomplete > div.selected {
-/*    background: #81ca91;*/
-    cursor: pointer;
-}
-
-input {
-    margin: .4rem;
+#legendPreis .gradient {
+    background: -webkit-linear-gradient(bottom, violet 0%, blue 20%, green 40%, yellow 60%, orange 80%, red 100%);
+    background: linear-gradient(to top, violet 0%, blue 20%, green 40%, yellow 60%, orange 80%, red 100%);
 }
