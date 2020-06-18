@@ -42,12 +42,12 @@ return response.json();
                       pointToLayer: function (feature, latlng) {
                        return L.circleMarker(latlng, {
                         radius:5,
-                        fillColor: "red",
+                        fillColor: feature.properties.color,
                         stroke:false,
                         fillOpacity: 1})
                       },
                       onEachFeature: function (feature, layer) {
-                        var popupContent = "POPUP";
+                        var popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : "+feature.properties.group+"</p><p><b>Tube ID</b> : "+feature.properties.id+"</p><p><b>Height</b> : "+feature.properties.height+"</p><p><b>Trafic</b> : "+feature.properties.trafic+"</p><p><b>Information</b> : "+feature.properties.info+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map);
 });
