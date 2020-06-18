@@ -7,7 +7,7 @@ var tiles;
 var cooCenter = [49.2401572, 6.9969327];
 var zoomLevel = 10;
 
-var cities =["rennes","tallinn","budapest","prague"];
+var cities =["rennes","tallinn","budapest","prague","dnipro"];
 
 
 window.onload=function(){
