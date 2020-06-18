@@ -1,23 +1,3 @@
 {"type":"FeatureCollection","features":[
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.061078417714453,49.29657291591792]},"properties":{"type":"wohnung","plz":66280,"preis":61500,"flaeche":38,"zimmer": 1 ,"baujahr":1994}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.994608349768971,49.220885292827425]},"properties":{"type":"wohnung","plz":66119,"preis":69000,"flaeche":40,"zimmer": 1 ,"baujahr":1976}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.899982968432143,49.40978746210493]},"properties":{"type":"wohnung","plz":66822,"preis":72000,"flaeche":42,"zimmer": 1 ,"baujahr":1982}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.016415317782685,49.23308180496485]},"properties":{"type":"wohnung","plz":66111,"preis":79000,"flaeche":31,"zimmer": 1 ,"baujahr":1992}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.661975355226732,49.36552363717092]},"properties":{"type":"wohnung","plz":66780,"preis":79000,"flaeche":36,"zimmer": 1 ,"baujahr":2001}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.9678235124066354,49.250305266076744]},"properties":{"type":"wohnung","plz":66111,"preis":85000,"flaeche":35,"zimmer": 1 ,"baujahr":1995}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.756230102129035,49.307637363395834]},"properties":{"type":"wohnung","plz":66740,"preis":88000,"flaeche":39,"zimmer": 1 ,"baujahr":1996}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.006740108560481,49.21866591535085]},"properties":{"type":"wohnung","plz":66119,"preis":89000,"flaeche":45,"zimmer": 1 ,"baujahr":0}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.594890916810305,49.489495986913376]},"properties":{"type":"haus","plz":66693,"preis":90000,"flaeche":130,"zimmer": 1 ,"baujahr":1948}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.994804146756152,49.23195461166616]},"properties":{"type":"wohnung","plz":66111,"preis":99000,"flaeche":35,"zimmer": 1 ,"baujahr":0}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.998770854966479,49.24659547497623]},"properties":{"type":"wohnung","plz":66113,"preis":122000,"flaeche":35,"zimmer": 1 ,"baujahr":1990}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.930906688565415,49.25629428413662]},"properties":{"type":"wohnung","plz":66115,"preis":145000,"flaeche":79,"zimmer": 1 ,"baujahr":1964}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.1591701934709215,49.40631943522871]},"properties":{"type":"haus","plz":66564,"preis":165000,"flaeche":545,"zimmer": 1 ,"baujahr":0}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.75823225531632,49.326234869939604]},"properties":{"type":"wohnung","plz":66740,"preis":169832,"flaeche":41,"zimmer": 1 ,"baujahr":2016}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.994213256854688,49.2367812524761]},"properties":{"type":"wohnung","plz":66111,"preis":173238,"flaeche":44,"zimmer": 1 ,"baujahr":2019}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.165695062944921,49.26775646216542]},"properties":{"type":"wohnung","plz":66386,"preis":198322,"flaeche":49,"zimmer": 1 ,"baujahr":2016}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.763134481391865,49.32378849152451]},"properties":{"type":"wohnung","plz":66740,"preis":201932,"flaeche":51,"zimmer": 1 ,"baujahr":2016}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.33874935016536,49.32297689934374]},"properties":{"type":"wohnung","plz":66424,"preis":281300,"flaeche":80,"zimmer": 1 ,"baujahr":2016}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.036623866313807,49.16579358100356]},"properties":{"type":"haus","plz":66271,"preis":530000,"flaeche":1,"zimmer": 1 ,"baujahr":2001}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.028807730779532,49.16762641287528]},"properties":{"type":"haus","plz":66271,"preis":530000,"flaeche":650,"zimmer": 1 ,"baujahr":2001}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[6.742619321113981,49.3090849974047]},"properties":{"type":"haus","plz":66740,"preis":690000,"flaeche":250,"zimmer": 1 ,"baujahr":1962}}
+{"type":"Feature","geometry":{"type":"Point","coordinates":[7.061078417714453,49.29657291591792]},"properties":{"id":"xxxxxx","group":"X-Men","city":"New-York","color":"red","height":3,"trafic": 5 ,"infos":"Lorem ipsum"}}
 ]}
