@@ -14,7 +14,8 @@ Choose a color like "#ff9999" with https://www.w3schools.com/colors/colors_picke
 
 The height is in meter.
 
-Give a value for the traffic on a scale [1,10]. We could also switch to the real "vehicles per hour".
+Give a value for the traffic 0 or 1. 
 
 Add some information but take car of the symbols in the text. Don't forget the escaper \ if needed or avoid to use special signs...
 
+Please don't push anything here but fill the spreadsheet in our Google Drive.
