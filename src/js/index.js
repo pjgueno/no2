@@ -4,7 +4,7 @@ import './../css/style.css';
 
 var map;
 var tiles;
-var cooCenter = [49.2401572, 6.9969327];
+var cooCenter = [50.073658, 14.418540];
 var zoomLevel = 10;
 
 var cities =["rennes","tallinn","budapest","prague","dnipro","minsk"];
@@ -47,7 +47,12 @@ return response.json();
                         fillOpacity: 1})
                       },
                       onEachFeature: function (feature, layer) {
-                        var popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : "+feature.properties.group+"</p><p><b>Tube ID</b> : "+feature.properties.id+"</p><p><b>Height</b> : "+feature.properties.height+"</p><p><b>Trafic</b> : "+feature.properties.trafic+"</p><p><b>Information</b> : "+feature.properties.info+"</p>";
+                        
+                          var traficLevel;
+                          
+                          if (feature.properties.trafic == 0) {traficLevel="low"}else{traficLevel="high"};
+                          
+                        var popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : "+feature.properties.group+"</p><p><b>Tube ID</b> : "+feature.properties.id+"</p><p><b>Height</b> : "+feature.properties.height+"</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map);
 });
