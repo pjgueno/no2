@@ -18,6 +18,7 @@
   "dependencies": {
     "geojson": "^0.5.0",
     "leaflet": "^1.6.0",
+    "leaflet-hash": "^0.2.1",
     "webpack": "^4.42.1"
   },
   "devDependencies": {

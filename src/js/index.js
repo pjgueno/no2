@@ -1,11 +1,12 @@
 import leaflet from 'leaflet';
+import hash from 'leaflet-hash';
 import 'leaflet/dist/leaflet.css';
 import './../css/style.css';
 
 var map;
 var tiles;
-var cooCenter = [50.073658, 14.418540];
-var zoomLevel = 10;
+var cooCenter = [50.163, 25.291];
+var zoomLevel = 6;
 
 var cities =["rennes","tallinn","budapest","prague","dnipro","minsk"];
 
@@ -27,6 +28,7 @@ tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 			attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
 			maxZoom: 18}).addTo(map);
 
+new L.Hash(map);
 
 fetch("./../json/data.json")
 .then(function(response) {
