@@ -5,10 +5,10 @@ import './../css/style.css';
 
 var map;
 var tiles;
-var cooCenter = [50.163, 25.291];
-var zoomLevel = 6;
+var cooCenter = [46.256, 17.666];
+var zoomLevel = 5;
 
-var cities =["rennes","tallinn","budapest","prague","dnipro","minsk"];
+var cities =["rennes","tallinn","budapest","prague","dnipro","minsk","fidenza"];
 
 
 window.onload=function(){
