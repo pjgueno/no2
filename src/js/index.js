@@ -8,7 +8,7 @@ var tiles;
 var cooCenter = [46.256, 17.666];
 var zoomLevel = 5;
 
-var cities =["rennes","tallinn","budapest","prague","dnipro","minsk","fidenza"];
+var cities =["rennes","tallinn","budapest","prague","dnipro","minsk","fidenza","moscou"];
 
 
 window.onload=function(){
@@ -59,6 +59,31 @@ return response.json();
                       }}).addTo(map);
 });
 
+fetch("./../json/eustations.json")
+.then(function(response) {
+return response.json();
+})
+.then(function(data) {
+    
+    var lookup = {};
+    var result = [];
+//    console.log(result);
+
+    L.geoJSON(data,{
+                      pointToLayer: function (feature, latlng) {
+                       return L.circleMarker(latlng, {
+                        radius:3,
+                        fillColor: '#808080',
+                        stroke:false,
+                        fillOpacity: 1})
+                      },
+                      onEachFeature: function (feature, layer) {
+                        
+                        var popupContent = "<h1>Official EU Station</h1><p><b>City</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
+                        layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
+                      }}).addTo(map);
+});
+
 cities.forEach(function(item){
     
     var city = item + ".geojson";
@@ -70,3 +95,41 @@ return response.json();
     L.geoJSON(data).addTo(map).bringToBack();
 });   
 });
+
+//INFO:
+//
+//https://airindex.eea.europa.eu/Map/AQI/Viewer/current?dt=2020-08-26T08:00:00.000Z&polu=0&stclass=All
+//
+//stclass Non-traffic Traffic
+//
+//polu=0
+//
+//0	"StationCode"
+//1	"SamplingPoint"
+//2	"PollutantId"
+//3	"WorstPollutantId"
+//4	"BandId"
+//5	"WorstBandId"
+//6	"Value"
+//7	"CAMS"
+//8	"Worst"
+//9	"StationClassification"
+//10	"AreaClassification"
+//11	"NormalizedValue"
+//12	"Compliant"
+//13	"NODATA"
+//
+//https://airindex.eea.europa.eu/Map/AQI/Viewer/instant?dt=2020-08-26T05%3A00%3A00.000Z&st=FR33203
+//https://airindex.eea.europa.eu/Map/AQI/Viewer/pie?st=FR33203&polu=0
+//https://airindex.eea.europa.eu/Map/AQI/Viewer/pastDays?st=FR33203&dt=2020-08-26T05%3A00%3A00.000Z
+
+//https://airindex.eea.europa.eu/Map/AQI/Viewer/forecast?dt=2020-08-27T07%3A00%3A00.000Z&polu=0&stclass=All
+
+//https://airindex.eea.europa.eu/Map/AQI/Viewer/current?dt=2020-08-26T13%3A00%3A00.000Z&polu=0&stclass=All
+
+//A VOIR:
+//var pollutants = {"SO2":1,"PM10":192,"PM2.5":246,"O3":352,"NO2":423};
+
+//CALL POUR LES TYPE DE VALEURS
+
+//https://airindex.eea.europa.eu/Map/AQI/Viewer/instant?dt=2020-08-26T12%3A50%3A00.000Z&st=DEBY004
