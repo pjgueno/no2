@@ -58,31 +58,31 @@ return response.json();
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map);
 });
-
-fetch("./../json/eustations.json")
-.then(function(response) {
-return response.json();
-})
-.then(function(data) {
-    
-    var lookup = {};
-    var result = [];
-//    console.log(result);
-
-    L.geoJSON(data,{
-                      pointToLayer: function (feature, latlng) {
-                       return L.circleMarker(latlng, {
-                        radius:3,
-                        fillColor: '#808080',
-                        stroke:false,
-                        fillOpacity: 1})
-                      },
-                      onEachFeature: function (feature, layer) {
-                        
-                        var popupContent = "<h1>Official EU Station</h1><p><b>City</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
-                        layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
-                      }}).addTo(map);
-});
+//
+//fetch("./../json/eustations.json")
+//.then(function(response) {
+//return response.json();
+//})
+//.then(function(data) {
+//    
+//    var lookup = {};
+//    var result = [];
+////    console.log(result);
+//
+//    L.geoJSON(data,{
+//                      pointToLayer: function (feature, latlng) {
+//                       return L.circleMarker(latlng, {
+//                        radius:3,
+//                        fillColor: '#808080',
+//                        stroke:false,
+//                        fillOpacity: 1})
+//                      },
+//                      onEachFeature: function (feature, layer) {
+//                        
+//                        var popupContent = "<h1>Official EU Station</h1><p><b>City</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
+//                        layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
+//                      }}).addTo(map);
+//});
 
 cities.forEach(function(item){
     
