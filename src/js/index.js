@@ -73,7 +73,7 @@ return response.json();
                           
                         var popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : "+feature.properties.group+"</p><p><b>Tube ID</b> : "+feature.properties.id+"</p><p><b>Height</b> : "+feature.properties.height+"</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>"+stations+"</b></p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
-                      }}).addTo(map);
+                      }}).addTo(map).bringToFront();
 });
 //
 //fetch("./../json/eustations.json")
@@ -126,6 +126,42 @@ return response.json();
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map);
 });
+
+
+fetch("./../json/budapeststations.json")
+.then(function(response) {
+return response.json();
+})
+.then(function(data) {
+    
+    var lookup = {};
+    var result = [];
+//    console.log(result);
+
+    L.geoJSON(data,{
+                      pointToLayer: function (feature, latlng) {
+                       return L.circleMarker(latlng, {
+                        radius:4,
+                        fillColor: '#808080',
+                        stroke:true,
+                        width:1,
+                        color:'#32CD32',
+                        fillOpacity: 1})
+                      },
+                      onEachFeature: function (feature, layer) {
+                        
+                        var popupContent = "<h1>Budapest Station</h1><p><b>City</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
+                        layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
+                      }}).addTo(map);
+});
+
+
+
+
+
+
+
+
 
 cities.forEach(function(item){
     
