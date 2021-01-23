@@ -14,69 +14,40 @@
 </head>
 
 <body>
-          <div id="sidebar" class="leaflet-sidebar collapsed">
+         
+    	<span id="menu">&#9776;</span>
+	<div id="loading_layer"><div id="loading">Loading data...</div></div>
+    <div id="sidebar" style="display: none;">
+		<div id="explanation">LOREM IPSUM</div>
+	</div>
+    
+    
+   	<div id="UI_container">
+		<div id ='legendcontainer'>
+			<div class ="legend" id="legend_NO2">
+				<div class="legend-inner">
+					<div class="gradient">
+					</div>
+					<div class="labels">
+                        <div class="label" style="bottom: 100%;"><b>400</b></div>
+						<div class="label" style="bottom: 80%;"><b>230</b></div>
+						<div class="label" style="bottom: 60%;"><b>120</b></div>
+						<div class="label limit" style="bottom: 40%;"><b>90</b></div>
+						<div class="label" style="bottom: 20%;"><b>40</b></div>
+						<div class="label" style="bottom: 1%;"><b>0 &micro;g/m&sup3;</b></div>
+					</div>
+				</div>
+			</div>
 
-        <!-- nav tabs -->
-        <div class="leaflet-sidebar-tabs">
-            <!-- top aligned tabs -->
-            <ul role="tablist">
-                <li><a href="#home" role="tab"><i class="fa fa-bars active"></i></a></li>
-                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-                <li><a href="#pictures" role="tab"><i class="fa fa-camera"></i></a></li>
-                <li><a href="#cdv" role="tab"><i class="fa fa-user"></i></a></li>
-            </ul>
-
-            <!-- bottom aligned tabs -->
-            <ul role="tablist">
-                <li><a href="https://github.com/pjgueno/no2" target="_blank"><i class="fa fa-github"></i></a></li>
-            </ul>
-        </div>
-    <div class="leaflet-sidebar-content">
-            <div class="leaflet-sidebar-pane" id="home">
-                <h1 class="leaflet-sidebar-header">
-                    LOREM IPSUM
-                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
-                </h1>
-
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                
-            </div>
-
-            <div class="leaflet-sidebar-pane" id="settings">
-                <h1 class="leaflet-sidebar-header">
-                    LOREM IPSUM
-                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
-                </h1>
-                
-                
-            </div>
-        
-                    <div class="leaflet-sidebar-pane" id="pictures">
-                <h1 class="leaflet-sidebar-header">
-                    LOREM IPSUM
-                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
-                </h1>
-
-            
-            </div>
-        
-        <div class="leaflet-sidebar-pane" id="cdv">
-                <h1 class="leaflet-sidebar-header">
-                    LOREM IPSUM
-                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
-                </h1>
-                
-            
-                
-            </div>
-
-            <div class="leaflet-sidebar-pane" id="messages">
-                <h1 class="leaflet-sidebar-header">Messages<span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            </div>
-        </div>
-</div>
+	   </div> 
+    </div>
+    
+    
+    
+    
+    
+    
+    
     
 	<div id ='map'></div> 
 </body>
