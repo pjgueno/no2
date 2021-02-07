@@ -16,6 +16,8 @@
   "author": "pjgueno",
   "license": "MIT",
   "dependencies": {
+    "d3-dsv": "^2.0.0",
+    "d3-geo": "^2.0.1",
     "d3-interpolate": "^2.0.1",
     "d3-scale": "^3.2.3",
     "geojson": "^0.5.0",

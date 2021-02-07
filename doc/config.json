@@ -1,0 +1,141 @@
+﻿{
+  "schemas": {
+	"default": { "latField" : { "attribute": "LATITUDE" }, "lonField" : { "attribute": "LONGITUDE" }, "valField" : { "attribute": "VALUE_NUMERIC" } }
+  },
+  "rampColors": {
+    "pm10-ramp":  {"items":
+        [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 35, "color": "rgb(0,85,0)"}
+                        , {"min": 35, "max": 60, "color": "rgb(0,170,0)"}
+                        , {"min": 60, "max": 90, "color": "rgb(255,170,0)"}
+                        , {"min": 90, "max": 180, "color": "rgb(255,85,0)"}
+                        , {"min": 180, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+    "pm25-ramp":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 15, "color": "rgb(0,85,0)"}
+                        , {"min": 15, "max": 30, "color": "rgb(0,170,0)"}
+                        , {"min": 30, "max": 40, "color": "rgb(255,170,0)"}
+                        , {"min": 40, "max": 90, "color": "rgb(255,85,0)"}
+                        , {"min": 90, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+    "no2-ramp":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 40, "color": "rgb(0,85,0)"}
+                        , {"min": 40, "max": 100, "color": "rgb(0,170,0)"}
+                        , {"min": 100, "max": 200, "color": "rgb(255,170,0)"}
+                        , {"min": 200, "max": 400, "color": "rgb(255,85,0)"}
+                        , {"min": 400, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+
+     "o3-ramp":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 80, "color": "rgb(0,85,0)"}
+                        , {"min": 80, "max": 120, "color": "rgb(0,170,0)"}
+                        , {"min": 120, "max": 180, "color": "rgb(255,170,0)"}
+                        , {"min": 180, "max": 240, "color": "rgb(255,85,0)"}
+                        , {"min": 240, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+    "so2-ramp":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 100, "color": "rgb(0,85,0)"}
+                        , {"min": 100, "max": 200, "color": "rgb(0,170,0)"}
+                        , {"min": 200, "max": 350, "color": "rgb(255,170,0)"}
+                        , {"min": 350, "max": 500, "color": "rgb(255,85,0)"}
+                        , {"min": 500, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},    
+    "co-ramp":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 5, "color": "rgb(0,85,0)"}
+                        , {"min": 5, "max": 10, "color": "rgb(0,170,0)"}
+                        , {"min": 10, "max": 25, "color": "rgb(255,170,0)"}
+                        , {"min": 25, "max": 50, "color": "rgb(255,85,0)"}
+                        , {"min": 50, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+    "pm10-ramp24":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 20, "color": "rgb(0,85,0)"}
+                        , {"min": 20, "max": 40, "color": "rgb(0,170,0)"}
+                        , {"min": 40, "max": 50, "color": "rgb(255,170,0)"}
+                        , {"min": 50, "max": 100, "color": "rgb(255,85,0)"}
+                        , {"min": 100, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+    "pm25-ramp24":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 10, "color": "rgb(0,85,0)"}
+                        , {"min": 10, "max": 20, "color": "rgb(0,170,0)"}
+                        , {"min": 20, "max": 25, "color": "rgb(255,170,0)"}
+                        , {"min": 25, "max": 50, "color": "rgb(255,85,0)"}
+                        , {"min": 50, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+    "no2-ramp24":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 40, "color": "rgb(0,85,0)"}
+                        , {"min": 40, "max": 90, "color": "rgb(0,170,0)"}
+                        , {"min": 90, "max": 120, "color": "rgb(255,170,0)"}
+                        , {"min": 120, "max": 230, "color": "rgb(255,85,0)"}
+                        , {"min": 230, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+
+     "o3-ramp24":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 50, "color": "rgb(0,85,0)"}
+                        , {"min": 50, "max": 100, "color": "rgb(0,170,0)"}
+                        , {"min": 100, "max": 130, "color": "rgb(255,170,0)"}
+                        , {"min": 130, "max": 240, "color": "rgb(255,85,0)"}
+                        , {"min": 240, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},
+    "so2-ramp24":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 100, "color": "rgb(0,85,0)"}
+                        , {"min": 100, "max": 200, "color": "rgb(0,170,0)"}
+                        , {"min": 200, "max": 350, "color": "rgb(255,170,0)"}
+                        , {"min": 350, "max": 500, "color": "rgb(255,85,0)"}
+                        , {"min": 500, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]},    
+    "co-ramp24":  {"items": [{"min": -1,"max": 0,"color": "rgb(169,169,169)"}, {"min": 0, "max": 5, "color": "rgb(0,85,0)"}
+                        , {"min": 5, "max": 10, "color": "rgb(0,170,0)"}
+                        , {"min": 10, "max": 25, "color": "rgb(255,170,0)"}
+                        , {"min": 25, "max": 50, "color": "rgb(255,85,0)"}
+                        , {"min": 50, "max": 99999, "color": "rgb(170,0,0)"}
+                   ]}
+  },
+  "circleRadius": {
+        "0": [1, 2, 3, 3, 4, 5],
+        "3": [2, 4, 6, 6, 7, 8],
+        "5": [6, 7, 8, 9, 10, 12],
+        "7": [8, 10, 12, 14, 16, 18 ],
+        "12": [10, 12, 14, 20, 22, 26]        
+    },
+  "stores": {
+    "rootUrl": "https://discomap.eea.europa.eu/Map/UTDViewer/dataService/Hourly?polu={NAME}&dt={YYYY}{MM}{DD}{HH}{MN}{SS}",
+    "rootDailyUrl": "https://discomap.eea.europa.eu/Map/UTDViewer/dataService/Daily?polu={NAME}&dt={YYYY}{MM}{DD}{HH}{MN}{SS}",
+    "rootAllDailyUrl": "https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu={NAME}&dt={YYYY}{MM}{DD}{HH}{MN}{SS}",
+    "graphUrl": "https://discomap.eea.europa.eu/Map/UTDViewer/dataService/SamplingPoint?spo={SAMPLINGPOINT_LOCALID}",
+    "dailyGraphUrl": "https://discomap.eea.europa.eu/Map/UTDViewer/dataService/DailySamplingPoint?spo={SAMPLINGPOINT_LOCALID}",
+    "startTime": "now-10d",
+    "finalTime": "now-1h",
+    "timeIncrement": 3600000,
+    "schema": "default",
+    "filters": [ "sttype", "attype" ],
+    "isDefault": true
+  },
+  "pollutants": [
+    {
+	    "key"	   : 192,
+	    "name"   : "PM10",
+	    "label"  : "Particulate matter (PM10)",
+        "unit"   : "µg/m<sup>3</sup>"
+	  },{
+	    "key"	   : 246,
+	    "name"   : "PM25",
+	    "label"  : "Particulate matter (PM2.5)",
+        "unit"   : "µg/m<sup>3</sup>"
+	  },
+    {
+      "key": 423,
+      "name": "NO2",
+      "label": "Nitrogen dioxide (NO2)",
+      "unit": "µg/m<sup>3</sup>"
+    },
+    {
+      "key": 352,
+      "name": "O3",
+      "label": "Ozone (O3)",
+      "unit": "µg/m<sup>3</sup>"
+    },
+    {
+      "key": 1,
+      "name": "SO2",
+      "label": "Sulphur dioxide (SO2)",
+      "unit": "µg/m<sup>3</sup>"
+    },
+    {
+      "key": 2,
+      "name": "CO",
+      "label": "Carbon monoxide (CO)",
+      "unit": "mg/m<sup>3</sup>"
+    }
+
+
+  ]
+}

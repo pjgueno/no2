@@ -4,73 +4,60 @@ import 'leaflet/dist/leaflet.css';
 import './../css/style.css';
 import leafletSidebarV2 from 'leaflet-sidebar-v2';
 import {scaleLinear} from 'd3-scale';
-import {interpolateRgb} from 'd3-interpolate'
-
+import {interpolateRgb} from 'd3-interpolate';
+import {csvParse} from 'd3-dsv';
+import {geoContains} from 'd3-geo';
 
 var map;
 var tiles;
 var cooCenter = [48.1077,-1.6895];
 var zoomLevel = 12;
+var geojsonCities = [];
 
 var cities =["rennes","tallinn","budapest","prague","dnipro","minsk","fidenza","moscou","dolgoprudny"];
+
+var listeCode = [];
 
 
 const scale_options = {
 	NO2: {
-//		valueDomain: [20, 40, 60, 100, 500],
         valueDomain: [0, 40, 90, 120, 230, 400],
-//		colorRange: ['#00796B', '#F9A825', '#E65100', '#DD2C00', '#960084']
         colorRange: ['rgb(0,85,0)', 'rgb(0,85,0)', 'rgb(0,170,0)', 'rgb(255,170,0)', 'rgb(255,85,0)', 'rgb(170,0,0)']
 	}
 };
 
-//rgb(169, 169, 169)
-//rgb(0,85,0)
-//rgb(0,170,0)
-//rgb(255,170,0)
-//rgb(255,85,0)
-//rgb(170,0,0)
-//
-
 var mobile = mobileCheck ();
-
 var dataPoints;
+var stationPoints;
 
-
-  var colorScale =scaleLinear()
+var colorScale = scaleLinear()
     .domain(scale_options.NO2.valueDomain)
     .range(scale_options.NO2.colorRange)
     .interpolate(interpolateRgb);
 
 
 window.onload=function(){
-
     map.setView(cooCenter, zoomLevel);
 	map.on('moveend', function() {});
 	map.on('move', function() {});
 	map.on('zoomend', function() {
         var zl = map.getZoom();        
         if(mobile == false && zl <= 9){
-                   dataPoints.setStyle({radius:2});
+                   dataPoints.setStyle({radius:0.1});
+                    stationPoints.setStyle({radius:0.1});
            }else if(mobile == false && zl < 12 && zl > 9){
                 dataPoints.setStyle({radius:5});
+                stationPoints.setStyle({radius:5});
            }else if(mobile == false){
                                dataPoints.setStyle({radius:10});
-           };
+                                stationPoints.setStyle({radius:10});
+           }; 
     });
     
     map.on('click', function(e) {
     map.setView([e.latlng.lat, e.latlng.lng], map.getZoom());
 	});
-    
-    
-
 };
-
-
-
-
-    
 
 map = L.map('map',{ zoomControl:true,minZoom:1,doubleClickZoom:false});
 
@@ -80,187 +67,110 @@ tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 
 new L.Hash(map);
 
-
- document.getElementById("menu").addEventListener("click", toggleSidebar); 
-
+document.getElementById("menu").addEventListener("click", toggleSidebar); 
 
 fetch("./../json/data.json")
-.then(function(response) {
-return response.json();
-})
-.then(function(data) {
-    
-    var lookup = {};
-    var result = [];
-//    console.log(result);
+    .then(function(response) {
+    return response.json();
+    })
+    .then(function(data) {
+         dataPoints = L.geoJSON(data,{
+                          pointToLayer: function (feature, latlng) {
+                           return L.circleMarker(latlng, {
+                            radius:responsiveRadius(mobile),
+                            fillColor: colorScale(feature.properties.value),                       stroke:true,
+                            weight:2,
+                            color:stations(feature),
+                            fillOpacity: 1})
+                          },
+                          onEachFeature: function (feature, layer) {
+                              var traficLevel;
+                              var stations;
+                              var popupContent;
+                              
+                            if (feature.properties.trafic == 0) {traficLevel="low"}else{traficLevel="high"};
+                            if (feature.properties.ostation == 0) {stations = "No official station around" }else if (feature.properties.ostation==1){stations = "Official station around"} else {stations = "N/A"};
 
-     dataPoints = L.geoJSON(data,{
+                            if (feature.properties.value != 0 && feature.properties.remark == ""){
+                                popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : "+feature.properties.group+"</p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+"</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>"+stations+"</b></p><p><b>Value</b> : "+feature.properties.value+"</p>";
+                            }else{
+                             popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : "+feature.properties.group+"</p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+"</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>"+stations+"</b></p><p><b>Remark</b> : "+feature.properties.remark+"</p>";
+                                };
+                            layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
+                          }}).addTo(map).bringToFront();
+                    document.getElementById("loading_layer").style.display ="none";
+    });
+
+fetch("./../json/eustations_inter.json")
+    .then(function(response) {
+    return response.json();
+    })
+    .then(function(data) {
+        data.features.forEach(function(e){
+        listeCode.push(e.properties.Code);    
+        });
+});
+  
+var dateString = dateFormater(new Date());
+console.log("https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu=NO2&dt="+dateString);
+    
+fetch("https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu=NO2&dt="+dateString)
+    .then(function(response) {
+    return response.text();
+    })
+    .then(function(data) {
+        console.log(csvParse(data));
+    
+        var dataEUJson ={"type": "FeatureCollection",
+        "name": "eustations_EEA",
+        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+        "features": []};
+    
+        var mapper = csvParse(data).map(function(obj){
+        var dataEUfeature = { "type": "Feature", "properties": { "Code": "", "Name": "", "Location": "", "Value": "", "Lon":"" , "Lat": "", "AreaClassification": "", "samplePointID":"", "StationClassification": "","dateBegin":"","dateEnd":""}, "geometry": { "type": "MultiPoint", "coordinates": [[ 0, 0 ]]}};
+            
+        var translated = L.Projection.SphericalMercator.unproject(new L.Point(obj.LONGITUDE, obj.LATITUDE));
+            
+        dataEUfeature.geometry.coordinates[0][0] = translated.lng;
+        dataEUfeature.geometry.coordinates[0][1] = translated.lat;
+        dataEUfeature.properties.Lon = (translated.lng).toString();
+        dataEUfeature.properties.Lat = (translated.lat).toString();
+        dataEUfeature.properties.AreaClassification = obj.AREACLASSIFICATION;
+        dataEUfeature.properties.StationClassification = obj.STATIONCLASSIFICATION;
+        dataEUfeature.properties.Code = obj.STATIONCODE;
+        dataEUfeature.properties.Name = obj.STATIONNAME;
+        dataEUfeature.properties.Location = obj.MUNICIPALITY;
+        dataEUfeature.properties.samplePointID = obj.SAMPLINGPOINT_LOCALID;
+        dataEUfeature.properties.Value = obj.VALUE_NUMERIC;
+        dataEUfeature.properties.dateBegin = obj.DATETIME_BEGIN;
+        dataEUfeature.properties.dateEnd = obj.DATETIME_END;
+
+        return dataEUfeature;
+        });
+    
+        console.log(listeCode);
+        var filtered = mapper.filter(function(e){
+        return listeCode.includes(e.properties.Code) == true;
+    });
+
+    console.log(filtered);
+    dataEUJson.features = filtered;
+    console.log(dataEUJson);
+    stationPoints =  L.geoJSON(dataEUJson,{
                       pointToLayer: function (feature, latlng) {
                        return L.circleMarker(latlng, {
                         radius:responsiveRadius(mobile),
-                        fillColor: colorScale(feature.properties.value),                                             
+                        fillColor: colorScale(feature.properties.Value),
                         stroke:true,
                         weight:2,
-                        color:stations(feature),
+                        color :'blue',
                         fillOpacity: 1})
                       },
-                      onEachFeature: function (feature, layer) {
-                        
-                          var traficLevel;
-                          var stations;
-                          var popupContent;
-                          
-                          if (feature.properties.trafic == 0) {traficLevel="low"}else{traficLevel="high"};
-                          if (feature.properties.ostation == 0) {stations = "No official station around" }else if (feature.properties.ostation==1){stations = "Official station around"} else {stations = "N/A"};
-                          
-                        if (feature.properties.value != 0 && feature.properties.remark == ""){
-                        
-                        popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : "+feature.properties.group+"</p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+"</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>"+stations+"</b></p><p><b>Value</b> : "+feature.properties.value+"</p>";
-                          
-                            }else{
-                        
-                         popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : "+feature.properties.group+"</p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+"</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>"+stations+"</b></p><p><b>Remark</b> : "+feature.properties.remark+"</p>";
-                                
-                                
-                            };
-                          
-                          
-                          
-                          
-                          
-                        layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
-                      }}).addTo(map).bringToFront();
-    
-    
-                document.getElementById("loading_layer").style.display ="none";
-
-    
-});
-//
-//fetch("./../json/eustations.json")
-//.then(function(response) {
-//return response.json();
-//})
-//.then(function(data) {
-//    
-//    var lookup = {};
-//    var result = [];
-////    console.log(result);
-//
-//    L.geoJSON(data,{
-//                      pointToLayer: function (feature, latlng) {
-//                       return L.circleMarker(latlng, {
-//                        radius:3,
-//                        fillColor: '#808080',
-//                        stroke:false,
-//                        fillOpacity: 1})
-//                      },
-//                      onEachFeature: function (feature, layer) {
-//                        
-//                        var popupContent = "<h1>Official EU Station</h1><p><b>City</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
-//                        layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
-//                      }}).addTo(map);
-//});
-
-
-fetch("./../json/eustations_inter.json")
-.then(function(response) {
-return response.json();
-})
-.then(function(data) {
-    
-    var lookup = {};
-    var result = [];
-//    console.log(result);
-
-    L.geoJSON(data,{
-                      pointToLayer: function (feature, latlng) {
-                       return L.circleMarker(latlng, {
-                        radius:3,
-                        fillColor: 'blue',
-                        stroke:false,
-                        fillOpacity: 1})
-                      },
-                      onEachFeature: function (feature, layer) {
-                        
+                      onEachFeature: function (feature, layer) { 
                         var popupContent = "<h1>Official EU Station</h1><p><b>City</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map).bringToFront();;
 });
-
-
-fetch("./../json/budapeststations.json")
-.then(function(response) {
-return response.json();
-})
-.then(function(data) {
-    
-    var lookup = {};
-    var result = [];
-
-    L.geoJSON(data,{
-                      pointToLayer: function (feature, latlng) {
-                       return L.circleMarker(latlng, {
-                        radius:4,
-                        fillColor: 'red',
-                        stroke:true,
-                        width:1,
-                        color:'#32CD32',
-                        fillOpacity: 1})
-                      },
-                      onEachFeature: function (feature, layer) {
-                        
-                        var popupContent = "<h1>Budapest Station</h1><p><b>City</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
-                        layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
-                      }}).addTo(map);
-});
-
-
-
-var POSTData = {
-  "locale": "ru_RU",
-  "mapType": "air",
-  "element": "PM2.5" // or 'element': 'PM10' for PM 10 stations.
-};
-
-
-//
-//
-//var dataPOST = new FormData();
-//
-//for(var i in POSTData){
-//   dataPOST.append(i,POSTData[i]);
-//};
-//
-//var dataPOST2 = Object.fromEntries(dataPOST.entries());
-//var dataPOST3 = JSON.stringify(dataPOST2);
-//
-//console.log(dataPOST3);
-//
-//
-//
-//
-//
-//
-//
-//console.log(dataPOST);
-//
-//fetch("https://mosecom.mos.ru/wp-content/themes/moseco/map/stations-new.php",{method:"POST", body:dataPOST3})
-//.then(function(response) {
-//return response.json();
-//})
-//.then(function(data) {
-//    
-//    console.log(data);
-//    
-//});
-//
-//
-//
-//
-
-
-
 
 cities.forEach(function(item){
     
@@ -269,18 +179,17 @@ cities.forEach(function(item){
 return response.json();
 })
 .then(function(data) {
+        geojsonCities.push(data);
         console.log(data);
-    L.geoJSON(data).addTo(map).bringToBack();
-});   
+    L.geoJSON(data).addTo(map).bringToBack().on('click', function () {
+       map.fitBounds(this.getBounds());    
+    });
+    });   
 });
 
-//
 function stations(feature){    
     if (feature.properties.ostation == 1) {return "#ff0000" }else {return "transparent"};
 };
-
-
-
 
 function mobileCheck () {
   let check = false;
@@ -324,50 +233,54 @@ function toggleSidebar() {
 	}
 }
 
+function isMarkerInsidePolygon(marker, poly) {
+    var polyPoints = poly.getLatLngs();       
+    var x = marker.getLatLng().lat, y = marker.getLatLng().lng;
+
+    var inside = false;
+    for (var i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
+        var xi = polyPoints[i].lat, yi = polyPoints[i].lng;
+        var xj = polyPoints[j].lat, yj = polyPoints[j].lng;
+
+        var intersect = ((yi > y) != (yj > y))
+            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+
+    return inside;
+}
 
 
 
+function dateFormater(date) {
+    
+    console.log(date);
+    
+    //one day before
+     date.setDate(date.getDate()-1);
+//    
+//    var result = date.getUTCFullYear().toString() + pad(date.getUTCMonth(),2,true) + pad(date.getUTCDate(),2,false) +pad(date.getUTCHours(),2, false)+pad(date.getUTCMinutes(),2,false) + pad(date.getUTCSeconds(),2,false);
+    
+        var result = date.getUTCFullYear().toString() + pad(date.getUTCMonth(),2,true) + pad(date.getUTCDate(),2,false) +pad(date.getUTCHours(),2, false)+"00" + "00";
+   
+    return result;
+}
 
-
-
-
-
-//AJOUTER LES SATTIONS DANS LES CONVEX HULL
-
-//INFO:
-//
-//https://airindex.eea.europa.eu/Map/AQI/Viewer/current?dt=2020-08-26T08:00:00.000Z&polu=0&stclass=All
-//
-//stclass Non-traffic Traffic
-//
-//polu=0
-//
-//0	"StationCode"
-//1	"SamplingPoint"
-//2	"PollutantId"
-//3	"WorstPollutantId"
-//4	"BandId"
-//5	"WorstBandId"
-//6	"Value"
-//7	"CAMS"
-//8	"Worst"
-//9	"StationClassification"
-//10	"AreaClassification"
-//11	"NormalizedValue"
-//12	"Compliant"
-//13	"NODATA"
-//
-//https://airindex.eea.europa.eu/Map/AQI/Viewer/instant?dt=2020-08-26T05%3A00%3A00.000Z&st=FR33203
-//https://airindex.eea.europa.eu/Map/AQI/Viewer/pie?st=FR33203&polu=0
-//https://airindex.eea.europa.eu/Map/AQI/Viewer/pastDays?st=FR33203&dt=2020-08-26T05%3A00%3A00.000Z
-
-//https://airindex.eea.europa.eu/Map/AQI/Viewer/forecast?dt=2020-08-27T07%3A00%3A00.000Z&polu=0&stclass=All
-
-//https://airindex.eea.europa.eu/Map/AQI/Viewer/current?dt=2020-08-26T13%3A00%3A00.000Z&polu=0&stclass=All
-
-//A VOIR:
-//var pollutants = {"SO2":1,"PM10":192,"PM2.5":246,"O3":352,"NO2":423};
-
-//CALL POUR LES TYPE DE VALEURS
-
-//https://airindex.eea.europa.eu/Map/AQI/Viewer/instant?dt=2020-08-26T12%3A50%3A00.000Z&st=DEBY004
+function pad(num,size,month) {
+    
+    console.log(month);
+    
+    if (month == true){
+        
+        console.log("MONTH=TRUE");
+       num += 1; 
+        num = num.toString();
+        
+        
+        
+        }else{
+    num = num.toString(); 
+}
+    while (num.length < size) num = "0" + num;
+    return num;
+}

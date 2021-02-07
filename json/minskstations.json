@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "minsk_stations",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{"type":"Feature","properties":{"Code":"MSQO1","Name":"official, Nezavisimosti Avenue, 110","CountryCode":"BY","Country":"Belarus","Location":"Minsk","Lon":27.633702,"Lat":53.928508, "AreaClassification":"Urban","StationClassification":"Background"},"geometry": {"type": "MultiPoint","coordinates":[[27.633702,53.928508]]}},
+{"type":"Feature","properties":{"Code":"MSQO2","Name":"official, st. Timiryazeva, 23","CountryCode":"BY","Country":"Belarus","Location":"Minsk","Lon":27.523653,"Lat":53.913392, "AreaClassification":"Urban","StationClassification":"Transport oriented"},"geometry": {"type": "MultiPoint","coordinates":[[27.523653,53.913392]]}},
+{"type":"Feature","properties":{"Code":"MSQO3","Name":"official, Korzhenevsky st. ","CountryCode":"BY","Country":"Belarus","Location":"Minsk","Lon":27.519513,"Lat":53.843113, "AreaClassification":"Urban","StationClassification":"Background"},"geometry": {"type": "MultiPoint","coordinates":[[27.519513,53.843113]]}},
+{"type":"Feature","properties":{"Code":"MSQO4","Name":"official, Radialnaya str. 50","CountryCode":"BY","Country":"Belarus","Location":"Minsk","Lon":27.643663,"Lat":53.895444, "AreaClassification":"Urban","StationClassification":"Industrial"},"geometry": {"type": "MultiPoint","coordinates":[[27.643663,53.895444]]}},
+{"type":"Feature","properties":{"Code":"MSQO5","Name":"official, Geroev of 120 division str., 120","CountryCode":"BY","Country":"Belarus","Location":"Minsk","Lon":27.710205,"Lat":53.948165, "AreaClassification":"Urban","StationClassification":"Background"},"geometry": {"type": "MultiPoint","coordinates":[[27.710205,53.948165]]}}
+]
+}
