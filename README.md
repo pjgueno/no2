@@ -6,16 +6,21 @@ The data is a geojson with a FeatureCollection.
 {"type":"FeatureCollection","features":[]}
 
 Each feature has such structure :
-{"type":"Feature","geometry":{"type":"Point","coordinates":[7.061078417714453,49.29657291591792]},"properties":{"id":"xxxxxx","group":"X-Men","city":"New-York","color":"#ff9999","height":3,"trafic": 5 ,"infos":"Lorem ipsum"}}
+{"type":"Feature","geometry":{"type":"Point","coordinates":[35.0517,48.46709]},"properties":{"tubeId":"DNK1","resultId":"2337","value":32.149,"link":"https://www.savednipro.org/","group":"SaveDnipro","city":"Dnipro","height":2.5,"trafic":1,"info":"Shopping mall \"MOST-City\", bus station, entrance to the \"Central bridge\"","ostation":0,"remark":""}}
+
 
 The cordinates are in the order [lon,lat].
 
-Choose a color like "#ff9999" with https://www.w3schools.com/colors/colors_picker.asp.
+The map loads some geojson for the cities. 
 
-The height is in meter.
+The EEA official station are loaded from the API described in data/config.json and parsed.
 
-Give a value for the traffic 0 or 1. 
+Further official stations in Budapest and Minsk are also loaded from geojson.
 
-Add some information but take car of the symbols in the text. Don't forget the escaper \ if needed or avoid to use special signs...
+Russian official stations are loaded from a request on an API.
 
-Please don't push anything here but fill the spreadsheet in our Google Drive.
+"npm start" to open the map in a virtual server.
+
+"npm run build" to make the dist.
+
+Don't forget to update the path of the json files in the main.js and copy those file from the json folder.
