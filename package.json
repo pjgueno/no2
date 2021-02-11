@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --config webpack.dev.js --mode development",
     "build": "webpack --config webpack.config.js"
   },
-  "homepage": "http://download.codingdavinci.de/index.php/s/CogeyAzf5PzWAyz",
+  "homepage": "https://sensor.community/en/",
   "keywords": [
     "Carte",
     "Moselle"
