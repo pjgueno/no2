@@ -1,5 +1,5 @@
 {
-  "name": "NO2 SensorCommunity",
+  "name": "NO2",
   "version": "1.0.0",
   "description": "A map for the NO2 projet of Sensor.Community",
   "main": "index.js",
