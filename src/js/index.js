@@ -109,7 +109,7 @@ new L.Hash(map);
 document.getElementById("menu").addEventListener("click", toggleSidebar); 
 
 
-fetch("./../json/eustations_inter.json")
+fetch("./json/eustations_inter.json")
     .then(function(response) {
     return response.json();
     })
@@ -182,7 +182,7 @@ fetch("https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu=NO
 });
 
 
-fetch("./../json/data.json")
+fetch("./json/data.json")
     .then(function(response) {
     return response.json();
     })
@@ -218,7 +218,7 @@ fetch("./../json/data.json")
 
 
 
-fetch("./../json/minskstations.json")
+fetch("./json/minskstations.json")
     .then(function(response) {
     return response.json();
     })
@@ -246,7 +246,7 @@ fetch("./../json/minskstations.json")
     
 });
 
-fetch("./../json/budapeststations.json")
+fetch("./json/budapeststations.json")
     .then(function(response) {
     return response.json();
     })
@@ -330,7 +330,7 @@ stationPoints4 =  L.geoJSON(dataRussia,{
 cities.forEach(function(item){
     
     var city = item + ".geojson";
-    fetch("./../json/"+city).then(function(response) {
+    fetch("./json/"+city).then(function(response) {
 return response.json();
 })
 .then(function(data) {
