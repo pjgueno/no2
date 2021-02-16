@@ -15,7 +15,7 @@ var zoomLevel = 5;
 var geojsonCities = [];
 
 
-var cities =["rennes","tallinn","budapest","prague","dnipro","minsk","fidenza","moscou","dolgoprudny"];
+var cities =["rennes","tallinn","budapest","prague","dnipro","minsk","fidenza","moscow","dolgoprudny"];
 
 var listeCode = [];
 
@@ -38,6 +38,22 @@ var colorScale = scaleLinear()
     .domain(scale_options.NO2.valueDomain)
     .range(scale_options.NO2.colorRange)
     .interpolate(interpolateRgb);
+
+
+var labelBaseOptions = {
+    iconUrl: './images/lab_marker.svg',
+    shadowUrl: null,
+    iconSize: new L.Point(21, 35),
+    iconAnchor: new L.Point(10, 34),
+    labelAnchor: new L.Point(25, 2),
+    wrapperAnchor: new L.Point(10, 35),
+    popupAnchor:  [-0, -35]
+};
+
+var labelRight = L.Icon.extend({
+    options: labelBaseOptions
+});
+
 
 
 window.onload=function(){
@@ -92,10 +108,7 @@ window.onload=function(){
         
         
     });
-    
-    map.on('click', function(e) {
-    map.setView([e.latlng.lat, e.latlng.lng], map.getZoom());
-	});
+
 };
 
 map = L.map('map',{ zoomControl:true,minZoom:1,doubleClickZoom:false});
@@ -108,8 +121,40 @@ new L.Hash(map);
 
 document.getElementById("menu").addEventListener("click", toggleSidebar); 
 
+fetch("./json/data.json")
+    .then(function(response) {
+    return response.json();
+    })
+    .then(function(data) {
+         dataPoints = L.geoJSON(data,{
+                          pointToLayer: function (feature, latlng) {
+                           return L.circleMarker(latlng, {
+                            radius:responsiveRadius(mobile),
+                            fillColor: colorScale(feature.properties.value),                       stroke:true,
+                            weight:2,
+                            stroke: false,
+                            color:stations(feature),
+                            fillOpacity: 1})
+                          },
+                          onEachFeature: function (feature, layer) {
+                              var traficLevel;
+                              var stations;
+                              var popupContent;
+                              
+                            if (feature.properties.trafic == 0) {traficLevel="low"}else{traficLevel="high"};
 
-fetch("./../json/eustations_inter.json")
+                            if (feature.properties.value != 0 && feature.properties.remark == ""){
+                                popupContent = "<h2>#NO2 Campaign 2020</h2><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : <a target='_blank' rel='noopener noreferrer' href='"+feature.properties.link+"'>"+feature.properties.group+"</a></p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+" m</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>Value</b> : "+feature.properties.value+" µg\/m&sup3; a day</p>";
+                            }else{
+                             popupContent = "<h2>#NO2 Campaign 2020</h2><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : <a target='_blank' rel='noopener noreferrer' href='"+feature.properties.link+"'>"+feature.properties.group+"</a></p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+" m</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>Remark</b> : "+feature.properties.remark+"</p>";
+                                };
+                            layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
+                          }}).addTo(map).bringToFront();
+                    document.getElementById("loading_layer").style.display ="none";
+    });
+
+
+fetch("./json/eustations_inter.json")
     .then(function(response) {
     return response.json();
     })
@@ -176,49 +221,13 @@ fetch("https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu=NO
                         fillOpacity: 1})
                       },
                       onEachFeature: function (feature, layer) { 
-                        var popupContent = "<h1>Official EU Station</h1><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
+                        var popupContent = "<h2>Official EU Station</h2><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map).bringToFront();;
 });
 
 
-fetch("./../json/data.json")
-    .then(function(response) {
-    return response.json();
-    })
-    .then(function(data) {
-         dataPoints = L.geoJSON(data,{
-                          pointToLayer: function (feature, latlng) {
-                           return L.circleMarker(latlng, {
-                            radius:responsiveRadius(mobile),
-                            fillColor: colorScale(feature.properties.value),                       stroke:true,
-                            weight:2,
-                            stroke: false,
-                            color:stations(feature),
-                            fillOpacity: 1})
-                          },
-                          onEachFeature: function (feature, layer) {
-                              var traficLevel;
-                              var stations;
-                              var popupContent;
-                              
-                            if (feature.properties.trafic == 0) {traficLevel="low"}else{traficLevel="high"};
-
-                            if (feature.properties.value != 0 && feature.properties.remark == ""){
-                                popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : <a target='_blank' rel='noopener noreferrer' href='"+feature.properties.link+"'>"+feature.properties.group+"</a></p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+" m</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>Value</b> : "+feature.properties.value+" µg\/m&sup3; a day</p>";
-                            }else{
-                             popupContent = "<h1>#NO2 Campaign 2020</h1><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : <a target='_blank' rel='noopener noreferrer' href='"+feature.properties.link+"'>"+feature.properties.group+"</a></p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+" m</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>Remark</b> : "+feature.properties.remark+"</p>";
-                                };
-                            layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
-                          }}).addTo(map).bringToFront();
-                    document.getElementById("loading_layer").style.display ="none";
-    });
-
-
-
-
-
-fetch("./../json/minskstations.json")
+fetch("./json/minskstations.json")
     .then(function(response) {
     return response.json();
     })
@@ -235,18 +244,13 @@ fetch("./../json/minskstations.json")
                       },
                       onEachFeature: function (feature, layer) {
                         
-                        var popupContent = "<h1>Official Belarus Station</h1><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
+                        var popupContent = "<h2>Official Belarus Station</h2><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map).bringToFront();;
     
-    
-    
-    
-    
-    
 });
 
-fetch("./../json/budapeststations.json")
+fetch("./json/budapeststations.json")
     .then(function(response) {
     return response.json();
     })
@@ -263,7 +267,7 @@ fetch("./../json/budapeststations.json")
                       },
                       onEachFeature: function (feature, layer) {
                         
-                        var popupContent = "<h1>Official Hungary Station</h1><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
+                        var popupContent = "<h2>Official Hungary Station</h2><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map).bringToFront();;    
 });
@@ -319,7 +323,7 @@ stationPoints4 =  L.geoJSON(dataRussia,{
                         fillOpacity: 1})
                       },
                       onEachFeature: function (feature, layer) { 
-                        var popupContent = "<h1>Official Russia Station</h1><p><b>Name</b> : "+feature.properties.Name+"</p>";
+                        var popupContent = "<h2>Official Russia Station</h2><p><b>Name</b> : "+feature.properties.Name+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map).bringToFront();;
     
@@ -330,14 +334,34 @@ stationPoints4 =  L.geoJSON(dataRussia,{
 cities.forEach(function(item){
     
     var city = item + ".geojson";
-    fetch("./../json/"+city).then(function(response) {
+    fetch("./json/"+city).then(function(response) {
 return response.json();
 })
 .then(function(data) {
-        geojsonCities.push(data);
-    L.geoJSON(data,{opacity:1,weight:1}).addTo(map).bringToBack().on('click', function () {
+    geojsonCities.push(data);
+    
+    var citybounds; 
+        
+    var city = L.geoJSON(data,{opacity:1,weight:1}).addTo(map).bringToBack().on('click', function () {
        map.fitBounds(this.getBounds());    
     });
+         
+        
+    var citybounds = city.getBounds();
+        
+    var centroid = city.getBounds().getCenter(); 
+    L.marker(centroid,{
+				icon: new labelRight({ labelText: "<a href=\"#\"></a>"}),
+                riseOnHover: true
+						})
+        .bindPopup("<h2>#NO2 Campaign 2020</h2><b>"+data.name.charAt(0).toUpperCase() + data.name.slice(1) + "</b> <br><br><a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://en.wikipedia.org/wiki/"+ data.name.charAt(0).toUpperCase() + data.name.slice(1) +"\">Wikipedia</a>")
+        .addTo(map).on('click', function(e) {
+            map.fitBounds(citybounds);
+            });
+        
+        
+        
+        
     });   
 });
 
@@ -393,12 +417,8 @@ function dateFormater(date) {
 function pad(num,size,month) {
     
     if (month == true){
-        
-        console.log("MONTH=TRUE");
        num += 1; 
-        num = num.toString();
-        
-        
+        num = num.toString();        
         }else{
     num = num.toString(); 
 }
