@@ -26,7 +26,7 @@ body { height: 100%;
 
 
 .leaflet-popup-content-wrapper{
-    width: 300px;
+    width: 250px;
     height:auto;
 }
 
