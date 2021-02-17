@@ -153,4 +153,6 @@ img.leaflet-tile {
 	font-weight: bold;	
 }
 
-
+#explanation{
+	padding: 10px;
+}
