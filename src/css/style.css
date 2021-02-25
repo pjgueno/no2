@@ -154,5 +154,12 @@ img.leaflet-tile {
 }
 
 #explanation{
-	padding: 10px;
+	padding: 20px;
+}
+
+#cercle {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    display: inline-block;
 }
