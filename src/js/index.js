@@ -62,7 +62,7 @@ window.onload=function(){
 	map.on('move', function() {});
 	map.on('zoomend', function() {
         var zl = map.getZoom();
-    
+
         if(mobile == false && zl <= 9){
                    dataPoints.setStyle({radius:0.1});
             stationPoints.setStyle({radius:0.1});
@@ -81,10 +81,10 @@ window.onload=function(){
                stationPoints2.setStyle({radius:10});
                stationPoints3.setStyle({radius:10});
                stationPoints4.setStyle({radius:10});
-           }; 
-        
-        
-        
+           };
+
+
+
         if(mobile == true && zl <= 9){
                    dataPoints.setStyle({radius:5});
                     stationPoints.setStyle({radius:5});
@@ -103,10 +103,10 @@ window.onload=function(){
                stationPoints2.setStyle({radius:20});
                stationPoints3.setStyle({radius:20});
                stationPoints4.setStyle({radius:20});
-           }; 
-        
-        
-        
+           };
+
+
+
     });
 
 };
@@ -119,7 +119,7 @@ tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 
 new L.Hash(map);
 
-document.getElementById("menu").addEventListener("click", toggleSidebar); 
+document.getElementById("menu").addEventListener("click", toggleSidebar);
 
 fetch("./json/data.json")
     .then(function(response) {
@@ -140,11 +140,11 @@ fetch("./json/data.json")
                               var traficLevel;
                               var stations;
                               var popupContent;
-                              
+
                             if (feature.properties.trafic == 0) {traficLevel="low"}else{traficLevel="high"};
 
                             if (feature.properties.value != 0 && feature.properties.remark == ""){
-                                popupContent = "<h2>#NO2 Campaign 2020</h2><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : <a target='_blank' rel='noopener noreferrer' href='"+feature.properties.link+"'>"+feature.properties.group+"</a></p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+" m</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>Value</b> : "+feature.properties.value+" µg\/m&sup3; a day</p>";
+                                popupContent = "<h2>#NO2 Campaign 2020</h2><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : <a target='_blank' rel='noopener noreferrer' href='"+feature.properties.link+"'>"+feature.properties.group+"</a></p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+" m</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>Value</b> : "+feature.properties.value+" µg\/m&sup3; (average concentration for the month)</p>";
                             }else{
                              popupContent = "<h2>#NO2 Campaign 2020</h2><p><b>City</b> : "+feature.properties.city+"</p><p><b>Group</b> : <a target='_blank' rel='noopener noreferrer' href='"+feature.properties.link+"'>"+feature.properties.group+"</a></p><p><b>Tube ID</b> : "+feature.properties.tubeId+"</p><p><b>Height</b> : "+feature.properties.height+" m</p><p><b>Trafic</b> : "+traficLevel+"</p><p><b>Information</b> : "+feature.properties.info+"<br><br><b>Remark</b> : "+feature.properties.remark+"</p>";
                                 };
@@ -160,30 +160,30 @@ fetch("./json/eustations_inter.json")
     })
     .then(function(data) {
         data.features.forEach(function(e){
-        listeCode.push(e.properties.Code);    
+        listeCode.push(e.properties.Code);
         });
 });
-  
+
 var dateString = dateFormater(new Date());
 //console.log("https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu=NO2&dt="+dateString);
-    
+
 fetch("https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu=NO2&dt="+dateString)
     .then(function(response) {
     return response.text();
     })
     .then(function(data) {
 //        console.log(csvParse(data));
-    
+
         var dataEUJson ={"type": "FeatureCollection",
         "name": "eustations_EEA",
         "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
         "features": []};
-    
+
         var mapper = csvParse(data).map(function(obj){
         var dataEUfeature = { "type": "Feature", "properties": { "Code": "", "Name": "", "Location": "", "Value": "", "Lon":"" , "Lat": "", "AreaClassification": "", "samplePointID":"", "StationClassification": "","dateBegin":"","dateEnd":""}, "geometry": { "type": "MultiPoint", "coordinates": [[ 0, 0 ]]}};
-            
+
         var translated = L.Projection.SphericalMercator.unproject(new L.Point(obj.LONGITUDE, obj.LATITUDE));
-            
+
         dataEUfeature.geometry.coordinates[0][0] = translated.lng;
         dataEUfeature.geometry.coordinates[0][1] = translated.lat;
         dataEUfeature.properties.Lon = (translated.lng).toString();
@@ -200,7 +200,7 @@ fetch("https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu=NO
 
         return dataEUfeature;
         });
-    
+
 //        console.log(listeCode);
         var filtered = mapper.filter(function(e){
         return listeCode.includes(e.properties.Code) == true;
@@ -220,7 +220,7 @@ fetch("https://discomap.eea.europa.eu/Map/UTDViewer/dataService/AllDaily?polu=NO
                         color :'blue',
                         fillOpacity: 1})
                       },
-                      onEachFeature: function (feature, layer) { 
+                      onEachFeature: function (feature, layer) {
                         var popupContent = "<h2>Official EU Station</h2><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map).bringToFront();;
@@ -232,7 +232,7 @@ fetch("./json/minskstations.json")
     return response.json();
     })
     .then(function(data) {
-    
+
   stationPoints2 =  L.geoJSON(data,{
                       pointToLayer: function (feature, latlng) {
                        return L.circleMarker(latlng, {
@@ -243,11 +243,11 @@ fetch("./json/minskstations.json")
                         fillOpacity: 1})
                       },
                       onEachFeature: function (feature, layer) {
-                        
+
                         var popupContent = "<h2>Official Belarus Station</h2><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map).bringToFront();;
-    
+
 });
 
 fetch("./json/budapeststations.json")
@@ -255,7 +255,7 @@ fetch("./json/budapeststations.json")
     return response.json();
     })
     .then(function(data) {
-    
+
   stationPoints3 =  L.geoJSON(data,{
                       pointToLayer: function (feature, latlng) {
                        return L.circleMarker(latlng, {
@@ -266,10 +266,10 @@ fetch("./json/budapeststations.json")
                         fillOpacity: 1})
                       },
                       onEachFeature: function (feature, layer) {
-                        
+
                         var popupContent = "<h2>Official Hungary Station</h2><p><b>Name</b> : "+feature.properties.Name+"</p><p><b>Area Classification</b> : "+feature.properties.AreaClassification+"</p><p><b>Station Classification ID</b> : "+feature.properties.StationClassification+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
-                      }}).addTo(map).bringToFront();;    
+                      }}).addTo(map).bringToFront();;
 });
 
 
@@ -290,10 +290,10 @@ xhr.onload = function() {
     }
 
     var dataRussia = {"type": "FeatureCollection","name": "moskow_stations","crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },"features": []};
-    
+
     var mapper = JSON.parse(xhr.response).able.map(function(obj){
         var dataEUfeature = { "type": "Feature", "properties": { "Code": "", "Name": "", "Location": "", "Value": "", "Lon":"" , "Lat": "", "AreaClassification": "", "samplePointID":"", "StationClassification": "","dateBegin":"","dateEnd":""}, "geometry": { "type": "MultiPoint", "coordinates": [[ 0, 0 ]]}};
-                        
+
         dataEUfeature.geometry.coordinates[0][0] = obj.longitude;
         dataEUfeature.geometry.coordinates[0][1] = obj.latitude;
         dataEUfeature.properties.Lon = obj.longitude.toString();
@@ -302,13 +302,13 @@ xhr.onload = function() {
 
         return dataEUfeature;
         });
-        
-        
-        
-        
-        
+
+
+
+
+
 // console.log(mapper);
-    
+
     dataRussia.features = mapper;
 //    console.log(dataRussia);
 stationPoints4 =  L.geoJSON(dataRussia,{
@@ -322,34 +322,34 @@ stationPoints4 =  L.geoJSON(dataRussia,{
                         color :'blue',
                         fillOpacity: 1})
                       },
-                      onEachFeature: function (feature, layer) { 
+                      onEachFeature: function (feature, layer) {
                         var popupContent = "<h2>Official Russia Station</h2><p><b>Name</b> : "+feature.properties.Name+"</p>";
                         layer.bindPopup(popupContent,{closeButton:true, maxWidth: "auto"});
                       }}).addTo(map).bringToFront();;
-    
+
   }
 
 
 
 cities.forEach(function(item){
-    
+
     var city = item + ".geojson";
     fetch("./json/"+city).then(function(response) {
 return response.json();
 })
 .then(function(data) {
     geojsonCities.push(data);
-    
-    var citybounds; 
-        
+
+    var citybounds;
+
     var city = L.geoJSON(data,{opacity:1,weight:1}).addTo(map).bringToBack().on('click', function () {
-       map.fitBounds(this.getBounds());    
+       map.fitBounds(this.getBounds());
     });
-         
-        
+
+
     var citybounds = city.getBounds();
-        
-    var centroid = city.getBounds().getCenter(); 
+
+    var centroid = city.getBounds().getCenter();
     L.marker(centroid,{
 				icon: new labelRight({ labelText: "<a href=\"#\"></a>"}),
                 riseOnHover: true
@@ -358,14 +358,14 @@ return response.json();
         .addTo(map).on('click', function(e) {
             map.fitBounds(citybounds);
             });
-        
-        
-        
-        
-    });   
+
+
+
+
+    });
 });
 
-function stations(feature){    
+function stations(feature){
     if (feature.properties.ostation == 1) {return "#ff0000" }else {return "transparent"};
 };
 
@@ -375,12 +375,12 @@ function mobileCheck () {
   return check;
 }
 
-function responsiveRadius(bool){    
+function responsiveRadius(bool){
     if (bool == true){
          return 5
-        }else{   
+        }else{
         return 0.1
-        }   
+        }
 }
 
 function openSidebar() {
@@ -403,24 +403,24 @@ function toggleSidebar() {
 
 
 function dateFormater(date) {
-    
+
     //one day before
      date.setDate(date.getDate()-1);
-//    
+//
 //    var result = date.getUTCFullYear().toString() + pad(date.getUTCMonth(),2,true) + pad(date.getUTCDate(),2,false) +pad(date.getUTCHours(),2, false)+pad(date.getUTCMinutes(),2,false) + pad(date.getUTCSeconds(),2,false);
-    
+
         var result = date.getUTCFullYear().toString() + pad(date.getUTCMonth(),2,true) + pad(date.getUTCDate(),2,false) +pad(date.getUTCHours(),2, false)+"00" + "00";
-   
+
     return result;
 }
 
 function pad(num,size,month) {
-    
+
     if (month == true){
-       num += 1; 
-        num = num.toString();        
+       num += 1;
+        num = num.toString();
         }else{
-    num = num.toString(); 
+    num = num.toString();
 }
     while (num.length < size) num = "0" + num;
     return num;
