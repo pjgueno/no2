@@ -10,6 +10,7 @@
     	<span id="menu">&#9776;</span>
 	<div id="loading_layer"><div id="loading">Loading data...</div></div>
     <div id="sidebar" style="display: none;">
+<!--
 		<div id="explanation">
             <p>The #NO2Tubes-Campaign is a (for now) one shot project of the <a target='_blank' rel='noopener noreferrer' href="https://sensor.community/en/">global open environmental data platform Sensor.Community</a>.</p>
             <p>Between the 1st of October and the 31st of October 2020 local teams placed in the displayed 9 cities in Europe >250 NO2 diffusion tubes in order to measure the average daily concentration of this gas in the air.</p>
@@ -24,6 +25,22 @@
             </p>
 	    <p>Contact us if you have feedback or want to get in touch with us:<a href="mailto:campaign02@Sensor.Community">campaign02@Sensor.Community</a>.</p>  
 	    </div>
+-->
+    		<div id="explanation">
+            <p>The #NO2Tubes-Campaign is a (for now) one shot project of the <a target='_blank' rel='noopener noreferrer' href="https://sensor.community/en/">global open environmental data platform Sensor.Community</a>.</p>
+            <p>Between the 1st of October and the 31st of October 2020 local teams placed in the displayed 9 cities in Europe >250 NO2 diffusion tubes in order to measure the average daily concentration of this gas in the air.</p>
+            <p>The blue dots <span  id="cercle" style="background: blue;"></span> display the locations of official measurement stations.</p>
+            <p>The other dots <span  id="cercle" style="background: -webkit-linear-gradient(bottom, #4B8246 0%, #4B8246 16%, #9FD08C 32%, #EFEDB4 48%, #F47A70 72%, #8C161E 80%, #8C161E 100%); background: linear-gradient(to top, #4B8246 0%, #4B8246 16%, #9FD08C 32%, #EFEDB4 48%, #F47A70 72%, #8C161E 80%, #8C161E 100%);"></span> display the NO2 diffusion tubes measurement locations and the color is in relation to the measured value.</p>
+            <p>You can check the current official measurement for NO2 on <a target='_blank' rel='noopener noreferrer' href="https://discomap.eea.europa.eu/Map/UTDViewer/UTDViewer/">this map of the EEA</a>. Change the pollutant for NO2 to have this being displayed.</p>  
+            <p>Under Directive 2008/50/EU, the standards for NO2 are:
+            <ul>
+                <li>200 µg/m&sup3; for an averaging period of 1 hour</li>
+                <li>40 µg/m&sup3; for an averaging period of 1 year</li>
+            </ul>
+            </p>
+        <p>For a better lisibility of the data, we used the scale of the <a target='_blank' rel='noopener noreferrer' href="https://www.eea.europa.eu/publications/air-quality-in-europe-2020-report">Air quality in Europe — 2020 report of the EEA</a> (page 72).</p>
+	    <p>Contact us if you have feedback or want to get in touch with us:<a href="mailto:campaign02@Sensor.Community">campaign02@Sensor.Community</a>.</p>  
+	    </div>
 	</div>
    	<div id="UI_container">
 		<div id ='legendcontainer'>
@@ -32,11 +49,19 @@
 					<div class="gradient">
 					</div>
 					<div class="labels">
+<!--
                         <div class="label" style="bottom: 100%;"><b>400</b></div>
 						<div class="label" style="bottom: 80%;"><b>230</b></div>
 						<div class="label" style="bottom: 60%;"><b>120</b></div>
 						<div class="label limit" style="bottom: 40%;"><b>90</b></div>
 						<div class="label" style="bottom: 20%;"><b>40</b></div>
+						<div class="label" style="bottom: 1%;"><b>0 &micro;g/m&sup3;</b></div>
+-->
+                        <div class="label" style="bottom: 100%;"><b>200</b></div>
+						<div class="label" style="bottom: 80%;"><b>50</b></div>
+						<div class="label" style="bottom: 60%;"><b>40</b></div>
+						<div class="label limit" style="bottom: 40%;"><b>30</b></div>
+						<div class="label" style="bottom: 20%;"><b>20</b></div>
 						<div class="label" style="bottom: 1%;"><b>0 &micro;g/m&sup3;</b></div>
 					</div>
 				</div>

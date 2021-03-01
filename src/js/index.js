@@ -20,12 +20,25 @@ var cities =["rennes","tallinn","budapest","prague","dnipro","minsk","fidenza","
 var listeCode = [];
 
 
+//const scale_options = {
+//	NO2: {
+//        valueDomain: [0, 40, 90, 120, 230, 400],
+//        colorRange: ['rgb(0,85,0)', 'rgb(0,85,0)', 'rgb(0,170,0)', 'rgb(255,170,0)', 'rgb(255,85,0)', 'rgb(170,0,0)']
+//	}
+//};
+
 const scale_options = {
 	NO2: {
-        valueDomain: [0, 40, 90, 120, 230, 400],
-        colorRange: ['rgb(0,85,0)', 'rgb(0,85,0)', 'rgb(0,170,0)', 'rgb(255,170,0)', 'rgb(255,85,0)', 'rgb(170,0,0)']
+        valueDomain: [0, 20, 30, 40, 50, 200],
+        colorRange: ['#4B8246', '#4B8246', '#9FD08C', '#EFEDB4', '#F47A70', '#8C161E']
 	}
 };
+
+
+
+
+
+
 
 var mobile = mobileCheck ();
 var dataPoints;

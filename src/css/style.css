@@ -91,10 +91,22 @@ body { height: 100%;
     content: '\2013   ';
 }
 
+/*
 #legend_NO2 .gradient {
     background: -webkit-linear-gradient(bottom, rgb(0,85,0) 0%, rgb(0,85,0) 16%, rgb(0,170,0) 32%, rgb(255,170,0) 48%, rgb(255,85,0) 72%, rgb(170,0,0) 80%, rgb(170,0,0) 100%);
     background: linear-gradient(to top, rgb(0,85,0) 0%, rgb(0,85,0) 16%, rgb(0,170,0) 32%, rgb(255,170,0) 48%, rgb(255,85,0) 72%, rgb(170,0,0) 80%, rgb(170,0,0) 100%);
 }
+*/
+
+#legend_NO2 .gradient {
+    background: -webkit-linear-gradient(bottom, #4B8246 0%, #4B8246 16%, #9FD08C 32%, #EFEDB4 48%, #F47A70 72%, #8C161E 80%, #8C161E 100%);
+    background: linear-gradient(to top, #4B8246 0%, #4B8246 16%, #9FD08C 32%, #EFEDB4 48%, #F47A70 72%, #8C161E 80%, #8C161E 100%);
+}
+
+
+
+
+
 
 
 img.leaflet-tile {
